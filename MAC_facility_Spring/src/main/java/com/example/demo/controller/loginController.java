@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.dao.UserRepository;
+import com.example.demo.model.LoginForm;
 import com.example.demo.model.Users;
 
 @Controller
@@ -24,30 +27,47 @@ public class loginController {
 	private UserRepository userRepository;
 	
 	@RequestMapping(value= {"/", "/login"}, method=RequestMethod.GET)
-	public String goToLogin(@ModelAttribute("user") Users user) {
-//		System.out.println("Inside loginController GetMapping /login and /");
+	public String showLogin(LoginForm loginForm) {
 	    return "login";
 	}
 	
 	@PostMapping("/login")
-    public String loginUser(Model model, @Valid @ModelAttribute("user") Users user, BindingResult bindingResult){
+    public String loginUser(@ModelAttribute("loginForm") @Valid LoginForm loginForm, BindingResult bindingResult, Model model){
 		
 		if (bindingResult.hasErrors()) {
-			return "login";
-		} else {
-			System.out.println(user.getUsername() +" "+ user.getPassword());
+			System.out.println("Inside errors found in Login form");
 			
-	        Users usr = userRepository.findByUsername(user.getUsername());
+			for (Object object : bindingResult.getAllErrors()) {
+			    if(object instanceof FieldError) {
+			        FieldError fieldError = (FieldError) object;
+
+			        System.out.println(fieldError.getCode());
+			    }
+
+			    if(object instanceof ObjectError) {
+			        ObjectError objectError = (ObjectError) object;
+
+			        System.out.println(objectError.getCode());
+			    }
+			}
+			
+			return "login";
+			
+		} else {
+			System.out.println(loginForm.getUsername() +" "+ loginForm.getPassword());
+			
+	        Users usr = userRepository.findByUsername(loginForm.getUsername());
 	        
 	        System.out.println("after fetching the row from the DB");
 			
-			if (usr != null && user.getPassword().equalsIgnoreCase(usr.getPassword())) {
+			if (usr != null && loginForm.getPassword().equalsIgnoreCase(usr.getPassword())) {
 				
 				model.addAttribute("currUserID", usr.getId());
 				
 				return "userHome";
 			}
 			else {
+				System.out.println("Inside user not found in DB");
 				model.addAttribute("userNotFound", "Given Username or Password is incorrect");
 				return "login";
 			}

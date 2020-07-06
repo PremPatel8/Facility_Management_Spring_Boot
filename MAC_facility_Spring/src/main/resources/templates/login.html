@@ -10,7 +10,7 @@
 <div th:if="${userNotFound}">
     <h3 th:text="${userNotFound}"></h3><br>
 </div>
-<form action = "#" th:action="@{/login}" th:object="${user}" method="POST">
+<form action = "#" th:action="@{/login}" th:object="${loginForm}" method="POST">
     <p>Username: <input type="text" th:field="*{username}" placeholder="Username" autofocus></p>
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
     

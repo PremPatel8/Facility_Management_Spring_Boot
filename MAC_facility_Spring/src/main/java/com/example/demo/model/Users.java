@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.context.annotation.Scope;
-
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"email","username"})})
 public class Users {
@@ -20,16 +18,24 @@ public class Users {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
+	@NotBlank(message = "Email may not be blank")
 	@Column(unique = true, nullable = false)
 	private String email;
+	
 	@NotNull(message = "Username may not be null")
 	@NotBlank(message = "Username may not be blank")
 	@Size(min=2, max=30)
 	@Column(unique = true, nullable = false)
     private String username;
+	
+	@NotBlank(message = "First name may not be blank")
     private String firstname;
+	
+	@NotBlank(message = "Last name may not be blank")
     private String lastname;
+	
 	private String role;
+	
 	@NotNull(message = "Password may not be null")
 	@NotBlank(message = "Password may not be blank")
 	private String password;
@@ -88,5 +94,11 @@ public class Users {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", email=" + email + ", username=" + username + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", role=" + role + ", password=" + password + "]";
 	}
 }
