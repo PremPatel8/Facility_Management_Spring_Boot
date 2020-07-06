@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>User Home Screen</title>
+</head>
+<body>
+<h1 align = "center">MAC FACILITY SYSTEM</h1>
+<h2 align = "center">User Home Screen</h2>
+<form action="" method="post">
+    <table>
+        <tr><td><a href = "/MARForm">Create MAR</a></td></tr>
+        <tr><td><a th:href = "@{/modifyProfile(userID = ${currUserID})}">Update Profile</a></td></tr>
+        <!-- <tr><td><a href = "/MARList">Search MAR</a></td></tr> -->
+        <tr><td><a href = "/login">Logout</a></td></tr>
+    </table>
+    <!-- <input id="currUserID" name="currUserID" type="hidden" value="${currUserID})"> -->
+</form>
+</body>
+</html>

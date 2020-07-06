@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Update Profile</title>
+</head>
+<body>
+<h1 align = "center">MAC FACILITY SYSTEM</h1>
+<h2 align = "center">Update Profile</h2>
+<div th:if="${successMessage}">
+    <h3 th:text="${successMessage}"></h3><br>
+</div>
+<form action = "UpdateProfile" th:object="${currentUser}" method="POST">
+    <p>Firstname: <input name="firstname" type="text" th:field="*{firstname}" autofocus></p>
+    <p>Lasname: <input name="lastname" type="text" th:field="*{lastname}" autofocus></p>
+    <p>Email: <input name="email" type="text" th:field="*{email}" /></p>
+    <p>Role: <select name = "role" required>
+    	<option value="" disabled selected>Select Role</option>
+        <option value = "user">User</option>
+        <option value = "facility_manager">Facility Manager</option>
+        <option value = "admin">Admin</option>
+        <option value = "repairer">Repairer</option>
+    </select></p>
+    <p>Username: <input name="username" type="text" th:field="*{username}" autofocus></p>
+    <p> Password: <input type="password" name="password"></p>
+    <input name = "id" id="id" th:field="*{id}" type="hidden"/>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

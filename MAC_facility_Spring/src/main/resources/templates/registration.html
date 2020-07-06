@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>REGISTRATION</title>
+</head>
+<body>
+<h1>MAC FACILITY SYSTEM</h1>
+<h2>Registration</h2>
+<div th:if="${successMessage}">
+    <h3 th:text="${successMessage}"></h3><br>
+</div>
+<form action = "register" method="POST">
+    <input name="firstname" type="text" placeholder="Firstname" autofocus><br>
+    <input name="lastname" type="text" placeholder="Lastname" autofocus><br>
+    <input name="email" type="text" placeholder="Email" autofocus><br>
+    <select name = "role" required>
+    	<option value="" disabled selected>Select Role</option>
+        <option value = "user">User</option>
+        <option value = "facility_manager">Facility Manager</option>
+        <option value = "admin">Admin</option>
+        <option value = "repairer">Repairer</option>
+    </select><br>
+    <input name="username" type="text" placeholder="Username" autofocus><br>
+    <input type="password" name="password" placeholder="Password"><br>
+    <button type="submit">Register</button>
+</form>
+<p><a th:href = "@{/login}" >Log In</a></p>
+</body>
+</html>
